@@ -6,18 +6,26 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import React from "react";
+import getColoByPokemonType from "../utils/getColorByPokemonType";
+import { capitalize } from "lodash";
+import { useNavigation } from "@react-navigation/native";
 
 export default function PokemonCard({ pokemon }) {
+  const navigation = useNavigation();
+  const pokemonColor = getColoByPokemonType(pokemon.type);
+  const bgStyles = { backgroundColor: pokemonColor, ...styles.bfStyles };
+
   const goToPokemon = () => {
-    console.log(`vamos al pokemon: ${pokemon.name}`);
+    console.log(`vamos al pokemon: ${pokemon.id}`);
+    navigation.navigate("Pokemon", { id: pokemon.id });
   };
   return (
     <TouchableWithoutFeedback onPress={goToPokemon}>
       <View style={styles.card}>
         <View style={styles.spacing}>
-          <View style={styles.bfStyles}>
+          <View style={bgStyles}>
             <Text>#{`${pokemon.order}`.padStart(3, 0)}</Text>
-            <Text style={styles.name}>{pokemon.name}</Text>
+            <Text style={styles.name}>{capitalize(pokemon.name)}</Text>
             <Image source={{ uri: pokemon.imagen }} style={styles.image} />
           </View>
         </View>
@@ -35,7 +43,9 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   bfStyles: {
-    backgroundColor: "grey",
+    flex: 1,
+    borderRadius: 15,
+    padding: 10,
   },
   number: {
     position: "absolute",

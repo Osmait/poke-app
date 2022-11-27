@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import Account from "../screens/Account";
 import Favorite from "../screens/Favorite";
 import Pokedex from "../screens/Pokedex";
+import FavoriteNavigation from "./FavoriteNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,10 +22,13 @@ export default function Navigation() {
           ),
         }}
       />
+
       <Tab.Screen
         name="Pokedex"
-        component={Pokedex}
+        component={FavoriteNavigation}
         options={{
+          title: "",
+          headerTransparent: true,
           tabBarLabel: "",
           tabBarIcon: () => renderPokeball(),
         }}
